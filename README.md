@@ -5,6 +5,33 @@
 This microservice is the foundational Product Management Module for a scalable e-commerce ecosystem. It is engineered to meet standards of software excellence, prioritizing architectural decoupling, type safety, and standardized API responses.
 本項目是可擴展電商生態系統中的核心產品管理模組。開發過程嚴格遵循軟體工程標準，優先考慮架構解耦、類型安全（Type Safety）以及標準化的 API 響應規範。
 
+Update:
+System Architecture
+This project adopts a distributed microservices architecture:
+Service Registry (Eureka): The system's central hub, responsible for service discovery.
+Product Service: An independent process, handling product logic.
+Order Service: An independent process, handling order logic.
+Concurrency & Distribution: Each service internally handles concurrent requests through multithreading; services horizontally scale through REST communication.
+
+  [ User Request ]
+              |
+      [ Service Registry ] <---- (Heartbeat) ---- [ Product Service ]
+         (Eureka: 8761)                          (Port: 8081)
+              ^                                       |
+              |                                 [ MySQL DB ]
+      [ Order Service ] <-----------------------------/
+         (Port: 8082)
+
+System Components
+
+1. Service Registry (Eureka)**: Responsible for service governance and monitoring.
+
+2. Product Service**: Product management module, connects to the MySQL database for CRUD operations.
+
+3. Order Service (In Progress)**: Order processing module, demonstrating load balancing and Remote Procedure Call (RPC).
+
+
+
 🛠️ Tech Stack | 技術棧
  * Framework: Spring Boot 2.7.3 (Enterprise stability).
  * Persistence: Spring Data JPA / Hibernate.
